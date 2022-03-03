@@ -1,0 +1,187 @@
+#user_specimen_id	field_call	bcoral_genet_id	bsym_genet_id	reef	region	latitude	longitude	geographic_origin	sample_location	latitude_outplant	longitude_outplant	depth	dist_shore	disease_resist	bleach_resist	mortality	tle	spawning	sperm_motility	healing_time	collector_last_name	collector_first_name	org	collection_date	contact_email	seq_facility	array_version	public	public_after_date	dna_extraction	dna_concentration
+RG Ap2	palmata			Concha	Tayrona	11.32222	-74.16666	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap5	palmata			Concha	Tayrona	11.32222	-74.16666	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap6	palmata			I. Aguja	Tayrona	11.32000	-74.20083	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap10	palmata			I. Aguja	Tayrona	11.32000	-74.20083	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap11	palmata			Neguanje	Tayrona	11.32097	-74.07801	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap13	palmata			Neguanje	Tayrona	11.32097	-74.07801	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap17	palmata			Chengue	Tayrona	11.31749	-74.13393	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap18	palmata			Chengue	Tayrona	11.31749	-74.13393	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap19	palmata			Gayraca	Tayrona	11.32319	-74.11334	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap21	palmata			Gayraca	Tayrona	11.32319	-74.11334	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap25	palmata			Cinto	Tayrona	11.33172	-74.05947	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap27	palmata			Cinto	Tayrona	11.33172	-74.05947	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap31	palmata			Aguja	Tayrona	11.31080	-74.19032	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap32	palmata			Aguja	Tayrona	11.31080	-74.19032	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap35	palmata			Punta Brava	Cartagena	10.18500	-75.74556	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap37	palmata			I. Fiesta	Rosario	10.18553	-75.72790	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap39	palmata			I. Fiesta	Rosario	10.18553	-75.72790	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap41	palmata			Rosario	Rosario	10.16262	-75.79881	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap43	palmata			Maravilla	San Bernardo	9.76130	-75.87303	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap44	palmata			Maravilla	San Bernardo	9.76130	-75.87303	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap47	palmata			Bajo Hojuela	San Bernardo	9.81472	-75.85583	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap48	palmata			Bajo Hojuela	San Bernardo	9.81472	-75.85583	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap53	palmata			Bajo Hojuela	San Bernardo	9.81472	-75.85583	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap54	palmata			Bajo Hojuela	San Bernardo	9.81472	-75.85583	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap57	palmata			Maravilla	San Bernardo	9.76111	-75.87277	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap58	palmata			Maravilla	San Bernardo	9.76111	-75.87277	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap62	palmata			Ceicen 	San Bernardo	9.70666	-75.85111	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap64	palmata			Ceicen 	San Bernardo	9.70666	-75.85111	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap65	palmata			Batea	San Bernardo	9.80444	-75.82111	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap66	palmata			Llantas	San Bernardo	9.80808	-75.83299	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap69	palmata			Bajo Naui	Capurganá	8.64472	-77.33972	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap71	palmata			Bajo Naui	Capurganá	8.64472	-77.33972	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap73	palmata			Cabo Tiburon	Capurganá	8.67111	-77.35805	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap75	palmata			Cabo Tiburon	Capurganá	8.67111	-77.35805	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap76	palmata			Coquera	Capurganá	8.65278	-77.34556	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap78	palmata			Coquera	Capurganá	8.65278	-77.34556	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap79	palmata			Bajo Naui	Capurganá	8.64472	-77.33972	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap81	palmata			Bajo Naui	Capurganá	8.64472	-77.33972	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap85	palmata			Bajo Naui	Capurganá	8.64472	-77.33972	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap86	palmata			Bajo Naui	Capurganá	8.64472	-77.33972	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap88	palmata			Serrana	San Andrés	14.36250	-80.16138	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap91	palmata			Serrana	San Andrés	14.36250	-80.16138	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap93	palmata			Roncador	San Andrés	13.56500	-80.04055	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap95	palmata			I. Arena	I. Arena	11.23472	-75.60111	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap96	palmata			I. Arena	I. Arena	11.23472	-75.60111	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap97	palmata			I. Arena	I. Arena	11.23472	-75.60111	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac1	cervicornis			Neguanje	Tayrona	11.32649	-74.07825	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac3	cervicornis			Neguanje	Tayrona	11.32649	-74.07825	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac4	cervicornis			Chengue	Tayrona	11.32130	-74.12826	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac7	cervicornis			Chengue	Tayrona	11.32130	-74.12826	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac8	cervicornis			Cinto	Tayrona	11.33625	-74.05276	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac10	cervicornis			Cinto	Tayrona	11.33625	-74.05276	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac13	cervicornis			I. Grande	Rosario	10.18444	-75.73194	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac16	cervicornis			Caribaru	Rosario	10.17194	-75.75527	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac17	cervicornis			Caribaru	Rosario	10.17194	-75.75527	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac19	cervicornis			Luis Guerra	Rosario	10.16962	-75.75046	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac21	cervicornis			Luis Guerra	Rosario	10.16962	-75.75046	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac23	cervicornis			Cartagena	Cartagena	10.24831	-75.62425	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac24	cervicornis			Pavitos	Rosario	10.17306	-75.76778	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac26	cervicornis			Pavitos	Rosario	10.17306	-75.76778	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac29	cervicornis			Ceicen	San Bernardo	9.70666	-75.85111	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac30	cervicornis			Ceicen	San Bernardo	9.70666	-75.85111	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac31	cervicornis			Batea	San Bernardo	9.80222	-75.8194	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac33	cervicornis			Bajo Hojuela	San Bernardo	9.81472	-75.85583	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac35	cervicornis			Bajo Hojuela	San Bernardo	9.81472	-75.85583	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac38	cervicornis			De los Santos	San Bernardo	9.75014	-75.86858	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac41	cervicornis			De los Santos	San Bernardo	9.75014	-75.86858	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac42	cervicornis			La Pared	San Bernardo	9.80244	-75.81946	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac46	cervicornis			La Pared	San Bernardo	9.80244	-75.81946	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac47	cervicornis			Bajo Naui	Capurganá	8.64472	-77.33972	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac49	cervicornis			Bajo Naui	Capurganá	8.64472	-77.33972	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac50	cervicornis			Bajo Naui	Capurganá	8.64472	-77.33972	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac51	cervicornis			Golfo de Uraba	Capurganá	8.64017	-77.32317	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac55	cervicornis			Cabo Tiburon	Capurganá	8.67194	-77.35722	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac56	cervicornis			Cabo Tiburon	Capurganá	8.67194	-77.35722	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac59	cervicornis			Roncador	San Andrés	13.50027	-80.03194	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac60	cervicornis			Roncador	San Andrés	13.50027	-80.03194	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac62	cervicornis			Quita Sueño	San Andrés	14.24861	-81.23861	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac64	cervicornis			Quita Sueño	San Andrés	14.24861	-81.23861	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac65	cervicornis			Providencia	San Andrés	13.37777	-81.38666	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac66	cervicornis			Providencia	San Andrés	13.37777	-81.38666	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac68	cervicornis			West Point	San Andrés	12.59528	-81.71111	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac71	cervicornis			Cayo Bolivar	San Andrés	12.59528	-81.71111	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac72	cervicornis			Plaza de Toros	San Andrés	12.59528	-81.71111	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac75	cervicornis			Plaza de Toros	San Andrés	12.59528	-81.71111	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac76	cervicornis			Serrana	San Andrés	14.36250	-80.16138	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac78	cervicornis			Serrana	San Andrés	14.36250	-80.16138	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac80	cervicornis			I. Fuerte	I. Fuerte	9.36818	-76.20421	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac81	cervicornis			I. Fuerte	I. Fuerte	9.36818	-76.20421	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac83	cervicornis			I. Arena	I. Arena	10.73864	-75.3498	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac84	cervicornis			I. Arena	I. Arena	10.73864	-75.3498	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac85	prolifera			Hibrido 1	I. Arena	10.73706	-75.35616	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac86	prolifera			Hibrido 2	I. Arena	10.73706	-75.35616	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac87	prolifera			Hibrido 3	I. Arena	10.73706	-75.35616	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac2	cervicornis			Neguanje	Tayrona	11.32649	-74.07825	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac5	cervicornis			Chengue	Tayrona	11.32130	-74.12826	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac6	cervicornis			Chengue	Tayrona	11.32130	-74.12826	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac9	cervicornis			Cinto	Tayrona	11.33625	-74.05276	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac11	cervicornis			I. Fiesta	Rosario	10.18555	-75.73805	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac12	cervicornis			I. Grande	Rosario	10.18444	-75.73194	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac14	cervicornis			Caribaru	Rosario	10.17194	-75.75527	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac15	cervicornis			Caribaru	Rosario	10.17194	-75.75527	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac18	cervicornis			Luis Guerra	Rosario	10.16962	-75.75046	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac20	cervicornis			Luis Guerra	Rosario	10.16962	-75.75046	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac22	cervicornis			Luis Guerra	Rosario	10.16962	-75.75046	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac25	cervicornis			Pavitos	Rosario	10.17306	-75.76778	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac27	cervicornis			Ceicen	San Bernardo	9.70666	-75.85111	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac28	cervicornis			Ceicen	San Bernardo	9.70666	-75.85111	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac32	cervicornis			Batea	San Bernardo	9.80222	-75.8194	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac34	cervicornis			Bajo Hojuela	San Bernardo	9.81472	-75.85583	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac36	cervicornis			Bajo Hojuela	San Bernardo	9.81472	-75.85583	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac37	cervicornis			De los Santos	San Bernardo	9.75014	-75.86858	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac39	cervicornis			De los Santos	San Bernardo	9.75014	-75.86858	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac40	cervicornis			De los Santos	San Bernardo	9.75014	-75.86858	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac43	cervicornis			La Pared	San Bernardo	9.80244	-75.81946	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac44	cervicornis			La Pared	San Bernardo	9.80244	-75.81946	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac45	cervicornis			La Pared	San Bernardo	9.80244	-75.81946	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac48	cervicornis			Bajo Naui	Capurganá	8.64472	-77.33972	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac52	cervicornis			Golfo de Uraba	Capurganá	8.64017	-77.32317	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac53	cervicornis			Golfo de Uraba	Capurganá	8.64017	-77.32317	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac54	cervicornis			Cabo Tiburon	Capurganá	8.67194	-77.35722	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac57	cervicornis			Cabo Tiburon	Capurganá	8.67194	-77.35722	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac58	cervicornis			Roncador	San Andrés	13.50027	-80.03194	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac61	cervicornis			Quita Sueño	San Andrés	14.24861	-81.23861	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac63	cervicornis			Quita Sueño	San Andrés	14.24861	-81.23861	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac67	cervicornis			Providencia	San Andrés	13.37777	-81.38666	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac69	cervicornis			West Point	San Andrés	12.59528	-81.71111	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac70	cervicornis			West Point	San Andrés	12.59528	-81.71111	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac73	cervicornis			Plaza de Toros	San Andrés	12.59528	-81.71111	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac74	cervicornis			Plaza de Toros	San Andrés	12.59528	-81.71111	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac77	cervicornis			Serrana	San Andrés	14.36250	-80.16138	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac79	cervicornis			Serrana	San Andrés	14.36250	-80.16138	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac82	cervicornis			I. Arena	I. Arena	10.73864	-75.3498	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac88	prolifera			Hibrido 4	I. Arena	10.73706	-75.35616	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ac89	prolifera			Hibrido 5	I. Arena	10.73706	-75.35616	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap1	palmata			Concha	Tayrona	11.32222	-74.16666	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap3	palmata			Concha	Tayrona	11.32222	-74.16666	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap4	palmata			Concha	Tayrona	11.32222	-74.16666	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap7	palmata			I. Aguja	Tayrona	11.32000	-74.20083	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap8	palmata			I. Aguja	Tayrona	11.32000	-74.20083	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap9	palmata			I. Aguja	Tayrona	11.32000	-74.20083	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap12	palmata			Neguanje	Tayrona	11.32097	-74.07801	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap14	palmata			Chengue	Tayrona	11.31749	-74.13393	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap15	palmata			Chengue	Tayrona	11.31749	-74.13393	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap16	palmata			Chengue	Tayrona	11.31749	-74.13393	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap20	palmata			Gayraca	Tayrona	11.32319	-74.11334	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap22	palmata			Gayraca	Tayrona	11.32319	-74.11334	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap23	palmata			Cinto	Tayrona	11.33172	-74.05947	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap24	palmata			Cinto	Tayrona	11.33172	-74.05947	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap26	palmata			Cinto	Tayrona	11.33172	-74.05947	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap28	palmata			Aguja	Tayrona	11.31080	-74.19032	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap29	palmata			Aguja	Tayrona	11.31080	-74.19032	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap30	palmata			Aguja	Tayrona	11.31080	-74.19032	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap33	palmata			Punta Brava	Cartagena	10.18500	-75.74556	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap34	palmata			Punta Brava	Cartagena	10.18500	-75.74556	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap36	palmata			I. Fiesta	Rosario	10.18553	-75.72790	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap38	palmata			I. Fiesta	Rosario	10.18553	-75.72790	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap40	palmata			Rosario	Rosario	10.16262	-75.79881	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap42	palmata			Maravilla	San Bernardo	9.76130	-75.87303	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap45	palmata			Maravilla	San Bernardo	9.76130	-75.87303	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap46	palmata			Bajo Hojuela	San Bernardo	9.81472	-75.85583	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap49	palmata			Bajo Hojuela	San Bernardo	9.81472	-75.85583	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap50	palmata			Bajo Hojuela	San Bernardo	9.81472	-75.85583	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap51	palmata			Bajo Hojuela	San Bernardo	9.81472	-75.85583	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap52	palmata			Bajo Hojuela	San Bernardo	9.81472	-75.85583	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap55	palmata			Bajo Hojuela	San Bernardo	9.81472	-75.85583	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap56	palmata			Maravilla	San Bernardo	9.76111	-75.87277	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap59	palmata			Maravilla	San Bernardo	9.76111	-75.87277	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap60	palmata			Ceicen 	San Bernardo	9.70666	-75.85111	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap61	palmata			Ceicen 	San Bernardo	9.70666	-75.85111	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap63	palmata			Ceicen 	San Bernardo	9.70666	-75.85111	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap67	palmata			Bajo Naui	Capurganá	8.64472	-77.33972	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap68	palmata			Bajo Naui	Capurganá	8.64472	-77.33972	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap70	palmata			Bajo Naui	Capurganá	8.64472	-77.33972	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap72	palmata			Cabo Tiburon	Capurganá	8.67111	-77.35805	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap74	palmata			Cabo Tiburon	Capurganá	8.67111	-77.35805	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap77	palmata			Coquera	Capurganá	8.65278	-77.34556	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap80	palmata			Bajo Naui	Capurganá	8.64472	-77.33972	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap82	palmata			Bajo Naui	Capurganá	8.64472	-77.33972	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap83	palmata			Bajo Naui	Capurganá	8.64472	-77.33972	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap84	palmata			Bajo Naui	Capurganá	8.64472	-77.33972	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap87	palmata			Serrana	San Andrés	14.36250	-80.16138	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap89	palmata			Roncador	San Andrés	13.56500	-80.04055	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap90	palmata			Serrana	San Andrés	14.36250	-80.16138	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap92	palmata			Roncador	San Andrés	13.56500	-80.04055	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		
+RG Ap94	palmata			I. Arena	I. Arena	11.23472	-75.60111	Reef	tip												García	Rocío	University of Magdalena	2013-09-08	rgarciau@unimagdalena.edu.co	Affymetrix	1	TRUE	TRUE		

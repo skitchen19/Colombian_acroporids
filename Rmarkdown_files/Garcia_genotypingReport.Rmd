@@ -1,0 +1,431 @@
+---
+title: "Plate PRO100220_Coral220_SAX_b01/PRO100220_Coral220_SAX_b02 Genotyping"
+author: "Sheila Kitchen"
+date: "March 24, 2019"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE, cache=FALSE}
+knitr::opts_chunk$set(echo = TRUE, root.dir="F:/PSU/NOAA/Rocio")
+```
+
+
+```{r load myData, include=FALSE}
+load("Garcia_work_space.RData")
+```
+
+#Install and load the packages required for the analyses.
+
+```{r packages,warning=FALSE, message=FALSE}
+#Required R-packages for multi-locus genotype calling
+library(vcfR)
+library(poppr)
+library(adegenet)
+library(ape)
+library(ggplot2)
+library(knitr)
+library(RColorBrewer) #color palettes
+library(data.table)
+library(yarrr) #color palettes
+```
+
+#Import the VCF file:
+Import the VCF file from local disk. These were merged outside of R.
+```{r import}
+##################
+### Import VCF ###
+##################
+
+#Read in VCF file with array SNVs
+vcf <- read.vcfR("F:/PSU/NOAA/Rocio/dup_removed_DB_snps_RocioP1_P2.vcf")
+```
+
+#Convert VCF file into formats compatible with the Poppr package:
+
+The VCF file is converted to a genind format and the user-submitted region is added to the data structure.
+
+```{r pop}
+######################################
+### Convert to Genind and genclone ###
+######################################
+
+#Convert VCF file into a genind needed for Poppr package
+#gl <- vcfR2genlight(vcf, n.cores=2)
+#gind <- new("genind",(as.matrix(gl)))
+gind <- vcfR2genind(vcf)
+
+#add population or species information to the genind pop slot
+poptab<-read.table("F:/PSU/NOAA/Rocio/popInfo_9SR13677_78.txt",
+                   check.names=FALSE, header=F, na.strings = c("", "NA"),
+                   stringsAsFactors = FALSE, sep="\t")
+colnames(poptab)<-c("row_id","affy_id","user_specimen_id","region")
+gind@pop <- as.factor(poptab$region)
+
+strata(gind)<-data.frame(pop(gind))
+obj2<-as.genclone(gind)
+obj2
+```
+
+#Calculate Multi-Locus Genotypes (MLGs):
+A distance matrix is generated to determine the within clone distance from between clone distance. Using previously genotyped clones, we have calculated the clone threshold to be 0.032 or 3.2% of differences between allele calls (this might include missing data, mis-calls or somatic mutations). After calculating the MLGs, a single representative for each unique MLG id is selected using "clonecorrect()". The allele calls are converted back to a dataframe to be used downstream.
+
+```{r mlg, fig.height=8}
+######################
+### Calculate MLGs ###
+######################
+
+#calculate the bitwise distance between individuals
+xdis<-bitwise.dist(obj2)
+
+#multilocus genotypes (threshold of 3.2%)
+mlg.filter(obj2, distance= xdis) <- 0.032 #threshold
+m<-mlg.table(obj2, background=TRUE, color=TRUE)
+
+#create table of MLGs
+id<-mlg.id(obj2)
+dt<-data.table(id,keep.rownames = TRUE)
+setnames(dt, c("id"), c("affy_id"))
+
+#cc<-clonecorrect(obj2, strata= ~pop.gind.)
+#tt<-genind2df(cc, sep="/")
+
+```
+
+#Generate Report after comparison with database:
+
+The series of code here is used to compare the 'new' sample submitted data to the previously genotyped *Acropora samples*. If a sample matches one found in the database, it will adopt that multi-locus genotype id. If the samples is new (as in does not match the database samples), a new unique MLG id is generated for it. Also, the % missing data and % allele composition is included for each sample in the table. Because this section of code calls on the database the report was generated offline.  
+```{r report, eval=FALSE}
+######################
+### Create Report  ###
+######################
+
+###final sample report
+#library(dplyr)
+#library(dbplyr)
+#library(tidyr)
+
+#import users 96 plate csv file
+#pinfo<-read.table("F:/PSU/NOAA/Rocio/metadata_9SR13677_78.txt",header=TRUE, stringsAsFactors = FALSE,sep="\t")
+#colnames(pinfo)<-c("user_specimen_id", "field_call",	"bcoral_genet_id","bsym_genet_id",
+#                   "reef", "region", "latitude", "longitude",	"geographic_origin",
+#                   "sample_location","latitude_outplant","longitude_outplant","depth",
+#                   "dist_shore","disease_resist","bleach_resist","mortality","tle","spawning",
+#                   "sperm_mortility",
+#                    "healing_time", "collector_last_name","collector_first_name","org",
+#                   "collection_date","contact_email",	"seq_facility","array_version","public",
+#                   "public_after_date", "dna_extraction", "dna_concentration")
+#pinfo$user_specimen_id<-as.character(pinfo$user_specimen_id)
+#pinfo2<-as.character(pinfo$user_specimen_id)
+#pi<-data.table(pinfo2)
+#setnames(pi, c("pinfo2"), c("user_specimen_id"))
+
+#connect to database
+#db <- DBI::dbConnect(RSQLite::SQLite(), "F:/PSU/Hybridization Project/SNPs/database/112017_databaseDevelopment/DatabaseFiles/STAGdb_alleles")
+
+#src_dbi(db)
+
+#import sample.table
+#mD <- tbl(db, "metaData")
+
+#select user and MLG columns
+#smlg <-mD %>%
+#select(user_specimen_id, coral_mlg_clonal_id, symbio_mlg_clonal_id,affy_id)
+
+#convert to data.frame
+#sm<-data.frame(smlg)
+#sm[sm == ""] <- NA
+
+#Missing GT in samples submitted
+#gt <- extract.gt(vcf, element = "GT", as.numeric=FALSE, return.alleles = FALSE)
+
+#myMiss <- apply(gt, MARGIN = 2, function(x){ sum(is.na(x)) })
+#myMiss <- (myMiss/nrow(vcf))*100
+#miss <- data.frame(myMiss)
+
+#hets <- apply(gt, MARGIN = 2, function(x){sum(lengths(regmatches(x, gregexpr("0/1", x))))})
+#hets <- (hets/nrow(vcf))*100
+#ht <- data.frame(hets)
+
+#refA <- apply(gt, MARGIN = 2, function(x){sum(lengths(regmatches(x, gregexpr("0/0", x))))})
+#refA <- (refA/nrow(vcf))*100
+#rA <- data.frame(refA)
+
+#altB <- apply(gt, MARGIN = 2, function(x){sum(lengths(regmatches(x, gregexpr("1/1", x))))})
+#altB <- (altB/nrow(vcf))*100
+#aB <- data.frame(altB)
+
+#convert missing data into data.table
+#mi <-setDT(miss, keep.rownames = TRUE)[]
+#setnames(mi, c("rn"), c("affy_id")) #change names to match db
+#setnames(mi, c("myMiss"), c("percent_missing_data_coral"))
+#mi$percent_missing_data_coral<-round(mi$percent_missing_data_coral, digits=2) #round missing data to two digits
+
+#convert heterozygosity data into data.table
+#ht <-setDT(ht, keep.rownames = TRUE)[]
+#setnames(ht, c("rn"), c("affy_id")) #change names to match db
+#setnames(ht, c("hets"), c("percent_mixed_coral"))
+#ht$percent_mixed_coral<-round(ht$percent_mixed_coral, digits=2) #round missing data to two digits
+
+#convert refA data into data.table
+#rA <-setDT(rA, keep.rownames = TRUE)[]
+#setnames(rA, c("rn"), c("affy_id")) #change names to match db
+#setnames(rA, c("refA"), c("percent_reference_coral"))
+#rA$percent_reference_coral<-round(rA$percent_reference_coral, digits=2) #round missing data to two digits
+
+#convert altB data into data.table
+#aB <-setDT(aB, keep.rownames = TRUE)[]
+#setnames(aB, c("rn"), c("affy_id")) #change names to match db
+#setnames(aB, c("altB"), c("percent_alternative_coral"))
+#aB$percent_alternative_coral<-round(aB$percent_alternative_coral, digits=2) #round missing data to two digits
+
+#convert mlg id to data.table format
+#dt<-data.table(id,keep.rownames = TRUE)
+#setnames(dt, c("id"), c("affy_id")) #change name to match db
+
+#transform
+#df3 <- dt %>%
+#  group_by(row_number()) %>%
+#  dplyr::rename(group='row_number()') %>%
+#  unnest(affy_id) %>%
+#  left_join(sm %>% # join with mlg table from database
+#              select("affy_id","coral_mlg_clonal_id"),
+#            by='affy_id')
+
+#if found in database, group members take on that previous mlg id
+#uniques <- unique(df3[c("group", "coral_mlg_clonal_id")])  
+#uniques <- uniques[!is.na(uniques$coral_mlg_clonal_id),]
+#na.mlg <- which(is.na(df3$coral_mlg_clonal_id))
+#na.group <- df3$group[na.mlg]
+#df3$coral_mlg_clonal_id[na.mlg] <- uniques$coral_mlg_clonal_id[match(na.group, uniques$group)]
+
+#define if the sample mlg matched previous genotyped sample
+#df4<- df3 %>%
+#  group_by(group) %>%
+#  mutate(DB_match = ifelse(is.na(coral_mlg_clonal_id),"no_match","match"))
+
+#create new mlg id for samples that did not match those in the database
+#none <- unique(df4[c("group", "coral_mlg_clonal_id")])  
+#none <- none[is.na(none$coral_mlg_clonal_id),]
+#na.mlg2 <- which(is.na(df4$coral_mlg_clonal_id))
+#n.g <- df4$group[na.mlg2]
+#ct<-length(unique(n.g))
+
+#n.g_ids<-sprintf("HG%04d",seq((sum(!is.na(unique(df4["coral_mlg_clonal_id"])))+1),by=1,length=ct)) #list of new group ids, the sequence starts at the number of ids present in df4$coral_mlg_clonal_ids plus 1.  I'm not sure if the df4 file contains all ids. If it doesn't then look below to change the seq() function.
+#rat<-cbind(unique(n.g),n.g_ids) #this is a key for pairing group with new ids
+#this for loop assigns the new id iteratively for all that have NA
+#for (i in 1:length(na.mlg2)){
+#  df4$coral_mlg_clonal_id[na.mlg2[i]]<-n.g_ids[match(df4$group[na.mlg2[i]],unique(n.g))]
+#}
+
+#subset the poptab for all samples
+#subpop<- poptab[c(2,3)]
+
+#merge data frames for final table of user samples only
+#report_user <- pi %>%
+#  left_join(
+#    subpop %>%
+#      select("affy_id","user_specimen_id"),
+#    by='user_specimen_id') %>%
+#  left_join(
+#    df4 %>%
+#      select("affy_id","coral_mlg_clonal_id","DB_match"),
+#    by='affy_id') %>%
+#  left_join(
+#    mi %>%
+#      select("affy_id","percent_missing_data_coral"),
+#    by='affy_id') %>%
+#  left_join(
+#    ht %>%
+#      select("affy_id","percent_mixed_coral"),
+#    by='affy_id') %>%
+#  left_join(
+#    rA %>%
+#      select("affy_id","percent_reference_coral"),
+#    by='affy_id') %>%
+#  left_join(
+#    aB %>%
+#      select("affy_id","percent_alternative_coral"),
+#    by='affy_id') %>%
+#  mutate(DB_match =ifelse(is.na(DB_match),"failed",DB_match))%>%
+#  mutate(coral_mlg_clonal_id =ifelse(is.na(coral_mlg_clonal_id),"failed",coral_mlg_clonal_id))%>%
+#  ungroup() %>%
+#  select(-group)
+
+#write.csv(report_user,file=paste("STAGdb_Report_",Sys.Date(),".csv",sep = ""),quote=FALSE)
+```
+
+#Visualization:
+
+## % Missing data barplot
+This plot shows the percentage of missing data for each sample that passed the initial quality filtering by Affymetrix.
+```{r miss}
+
+######################
+### Visualization  ###
+######################
+
+##subset to new plate data
+#create vector i = vector of numerics indicating number of individuals desired
+#made from affy_id collumn from report_user data table
+
+i <- report_user[[2]]
+subUser<-obj2[i, mlg.reset = FALSE, drop = FALSE]
+
+##Create a phylogeny of samples based on distance matrices
+cols <- piratepal("basel")
+
+#missing data barplot
+poptab$miss <- report_user$percent_missing_data_coral[match(miss$affy_id, report_user$affy_id)]
+test2 <- which(!is.na(poptab$miss))
+miss96 <- poptab$miss[test2]
+name96 <-poptab$user_specimen_id[test2]
+
+#pdf ("MissingData_graph.pdf", width=10, height=7)
+par(mar = c(8,4,4,2))
+x<-barplot(miss96, las = 2, col = cols,
+           ylim=c(0,3), cex.axis=0.8,space = 0.8,
+           ylab = "Missingness (%)",xaxt="n")
+text(cex=0.6, x=x-0.25, y=-.05, name96, xpd=TRUE, srt=60, adj= 1)
+#dev.off()
+```
+
+##Neighbor-Joining Phylogeny
+
+Here a genetic distance matrix calculated using the Provesti distance is used to construct a neighbor-joining phylogeny with 100 bootstrap replicates. The final tree is written to a Newick formatted file that can be visualized using outside programs. (I ran the bootstraping step outside the generation of this pdf because of the run time being > 2hrs)
+```{r tree}
+
+#set.seed(999)
+#pdf ("NJphylogeny.pdf")
+#theTree <-  subUser %>%
+#  aboot(dist = provesti.dist, sample = 100, tree = "nj",
+#        cutoff = 50, quiet = TRUE) %>%
+#  ladderize() # organize branches by clade
+
+#theTree$tip.label <- report_user$user_specimen_id[match(theTree$tip.label, report_user$affy_id)]
+
+plot.phylo(theTree,tip.color = cols[subUser$pop],label.offset = 0.0125,cex=0.7,
+           font=2, lwd=4,align.tip.label= F,no.margin = T)
+add.scale.bar(0,0.95,length = 0.05, cex=0.65,lwd=3) # add a scale bar showing 5% difference.
+nodelabels(theTree$node.label, cex=.5, adj = c(1.5, -0.1), frame = "n", font=3,
+           xpd = TRUE)
+legend("topright",legend = c(levels(subUser$pop)),text.col = cols,
+                              xpd = T, cex = 0.8)
+
+#dev.off()
+
+summary(theTree)
+
+#write.tree(theTree, file = "STAGdb_NJ_tree.tre")
+
+```
+
+## Identity-by-state analysis
+
+This analysis is similar to the phylogenetic tree above. A distance matrix is created for all the user submitted samples. Those samples that share more alleles/loci will cluster together in the dendrogram. The data was visualized with default clustering resulting 4 clusters,  separating samples by species first (3 main clusters), then two sub-clusters of *A. cervicornis* are found. When forcing grouping by region 7 clusters are identified. These however are intermixed in the dendrogram.  
+```{r ibs}
+##Identity-by-state
+library(SNPRelate)
+
+#subset to the user samples
+#svcf<-vcf[,167:324]
+#write.vcf(svcf, "subset.vcf.gz")
+
+vcf.fn <- "F:/PSU/NOAA/Rocio/subset.vcf.gz"
+snpgdsVCF2GDS(vcf.fn, "test3.gds", method="biallelic.only")
+
+genofile <- snpgdsOpen(filename="test3.gds",  readonly=FALSE)
+
+subpop2<- poptab[c(2,4)]
+poptab_sub <- report_user %>%
+  left_join(
+    subpop2 %>%
+      select("affy_id","region"),
+    by='affy_id')%>% drop_na()
+
+samp.annot <- data.frame(pop.group = c(poptab_sub$region))
+add.gdsn(genofile, "sample.annot", samp.annot)
+samp.id <- data.frame(sample.id = c(poptab_sub$user_specimen_id))
+add.gdsn(genofile, "sample.annot", samp.id)
+
+pop_code <- read.gdsn(index.gdsn(genofile, path="sample.annot/pop.group"))
+table(pop_code)
+pop.group <- as.factor(read.gdsn(index.gdsn(genofile, "sample.annot/pop.group")))
+pop.level <- levels(pop.group)
+samp_code <-read.gdsn(index.gdsn(genofile, path="sample.id2/sample.id"))
+
+## Identity-By-State Analysis
+ibs <- snpgdsIBS(genofile, num.thread=2, autosome.only=FALSE)
+
+# individulas in the same population are clustered together
+pop.idx <- order(pop_code)
+
+# multidimensional scaling analysis
+loc <- cmdscale(1 - ibs$ibs, k = 2)
+x <- loc[, 1]; y <- loc[, 2]
+race <- as.factor(pop_code)
+
+plot(x, y, col=race, xlab = "", ylab = "",
+     main = "Multidimensional Scaling Analysis (IBS)")
+legend("topleft", legend=levels(race), pch="o", text.col=1:nlevels(race))
+
+#cluster analysis on the n?nn?n matrix of genome-wide IBS pairwise distance
+set.seed(100)
+par(cex=0.7)
+ibs.hc <- snpgdsHCluster(snpgdsIBS(genofile, num.thread=2,autosome.only=FALSE))
+
+rv <- snpgdsCutTree(ibs.hc)
+plot(rv$dendrogram, main="Color by Cluster", horiz = TRUE, leaflab="none")
+legend("bottomleft", legend=levels(rv$samp.group), xpd=T, col=1:nlevels(rv$samp.group), pch=19, ncol=4, cex=0.9)
+
+table(rv$samp.group)
+
+race <- as.factor(pop_code)
+rv2 <- snpgdsCutTree(ibs.hc, samp.group=race)
+plot(rv2$dendrogram, main="Color by Region", horiz = TRUE, leaflab="none")
+legend("bottomleft", legend=levels(race), xpd=T, col=1:nlevels(race), pch=19, ncol=4, cex=0.9)
+
+#close GDS file
+snpgdsClose(genofile)
+```
+
+## Allele pie-charts
+
+This code will create a summary and individual pie-charts for the breakdown of reference, alternative and heterozygous alleles. The hybrids (*A. prolifera*) are most notable for the % heterozygosity. These charts are printed to a pdf. 
+```{r pie}
+###Generate 96 pie charts###
+#Make a table to subset the numerical and user_specimen_id values out of report_user for the 96 pies (user_specimen_id names will be used to label each pie)
+dt1 <- data.table(report_user)
+dt1 <- report_user[c(-2,-3,-4)]
+dt1<-na.omit(dt1)
+tdt1 <- t(dt1) #translate to 96 columns and 5 rows
+
+#make another data table and transpose it the same as dt1 to just get numerics; these will feed into the creation of 96 vectors, "x" in the for loop below
+dt2 <- data.table(report_user)
+dt2 <- report_user[c(-1,-2,-3,-4)]
+tdt2 <- t(dt2) #translate to 96 columns and 5 rows
+
+#Bake the Pies
+x <- tdt2[1:185] #creates 96 vectors
+tdt1_matrix<-as.matrix(tdt1[-1,])
+mode(tdt1_matrix)<-"numeric"
+labels<-c("missing data","mixed","reference","alternative")
+spy<-rowMeans(tdt1_matrix)
+
+#pdf(file = "Percent)Breakdown.pdf")
+pie(spy,labels = paste(labels," (",round(spy,1),"%)",sep=""), radius = 0.60,
+    main = paste("Average breakdown of SNP assignments across all samples"),
+    cex.main=.75,col=c("GREY","#006DDB","#24FF24","#920000")) # this is an average pie of all samples
+
+#par(mfrow=c(3,2))
+#nc<-ncol(tdt1_matrix)
+#for (i in 1:nc)
+#{
+#  pie(tdt1_matrix[,i],labels = paste(labels," (",round(tdt1_matrix[,i],1),"%)",sep=""),
+#      radius = 0.90, main = paste("Breakdown of SNP assignments for",tdt1[1,i]), col=c("GREY","#006DDB","#24FF24","#920000"))
+#  print(i)
+#}
+
+#dev.off()
+```

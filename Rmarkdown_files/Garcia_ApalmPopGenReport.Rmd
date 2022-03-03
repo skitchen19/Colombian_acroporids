@@ -1,0 +1,780 @@
+---
+title: "Garcia_Apalm_popStructure"
+author: "Sheila Kitchen"
+date: "February 11, 2022"
+output:
+  pdf_document:
+    latex_engine: xelatex
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, root.dir="F:/PSU/NOAA/Rocio/Apalm")
+```
+
+```{r warning=FALSE, message=FALSE}
+#Required R-packages for multi-locus genotype calling
+library(vcfR)
+library(poppr)
+library(adegenet)
+library(ape)
+library(ggplot2)
+theme_set(theme_bw())
+library(knitr)
+library(RColorBrewer)
+library(data.table)
+library(yarrr)
+library(reshape2)
+library(pcadapt)
+library(qvalue)
+library(devtools)
+#if (!("OutFLANK" %in% installed.packages())){install_github("whitlock/OutFLANK")}
+library(OutFLANK)
+library(dplyr)
+library(tidyverse)
+library(boa)
+library("sf")
+library("rnaturalearth")
+library("rnaturalearthdata")
+library(scatterpie)
+library(mapplots)
+```
+
+#Import the Apalm VCF file:
+Based on the genotype report, I extracted the 69 unique MLGs from the 97 Apalm samples using VCFTOOLS (outside of R).  
+```{r import}
+##################
+### Import VCF ###
+##################
+
+#Read in VCF file with array SNVs
+APvcf <- read.vcfR("E:/PSU/NOAA/Rocio/Apalm/AP_mergeDB_maf0.05.recode.vcf")
+
+#add population or species information to the genind pop slot
+poptab<-read.table("E:/PSU/NOAA/Rocio/Apalm/apalm_pop3.txt",
+                   check.names=FALSE, header=F, na.strings = c("", "NA"),
+                   stringsAsFactors = FALSE, sep="\t")
+colnames(poptab)<-c("row_id","affy_id","user_specimen_id","region", "lat", "long","subregion", "region2","subregion2", "assigned_pop")
+
+gindAP <- vcfR2genlight(APvcf)
+gindAP@pop <- as.factor(poptab$region)
+strata(gindAP) <- data.frame(poptab[,c(4,7)])
+gindAP
+```
+
+# K-clustering- how many clusters/populations?
+Identification of the best K is performed by find.clusters in the Adegenet package. This function first transforms the data using PCA. Then, it runs k-means algorithm with increasing values of k and computes associated summary statistics (by default, BIC).
+```{r ks}
+
+# find optimal k, repeat 10 times for each value
+maxK <- 10
+myMat <- matrix(nrow=10, ncol=maxK)
+colnames(myMat) <- 1:ncol(myMat)
+set.seed(9)
+for(i in 1:nrow(myMat)){
+  grp <- find.clusters(gindAP, n.pca = 120, choose.n.clust = FALSE,  max.n.clust = maxK, criterion="diffNgroup")
+  myMat[i,] <- grp$Kstat
+}
+
+my_df <- melt(myMat)
+colnames(my_df)[1:3] <- c("Group", "K", "BIC")
+my_df$K <- as.factor(my_df$K)
+head(my_df)
+
+p1 <- ggplot(my_df, aes(x = K, y = BIC))
+p1 <- p1 + geom_boxplot()
+p1 <- p1 + theme_bw()
+p1 <- p1 + xlab("Number of groups (K)")
+p1
+
+```
+There is a decrease in BIC at k=3 cluster, after which the BIC increases. This suggests 3 cluster should be retained.
+
+# PCA
+Summarize the variation between the samples.
+```{r PCA}
+ap.pca <- glPca(gindAP, nf = 10)
+
+#plot of the % variation explained by eigenvectors
+barplot(100*ap.pca$eig/sum(ap.pca$eig), col = heat.colors(50), main="PCA Eigenvalues")
+title(ylab="Percent of variance\nexplained", line = 2)
+title(xlab="Eigenvalues", line = 1)
+
+ap.pca.scores <- as.data.frame(ap.pca$scores)
+ap.pca.scores$pop <- pop(gindAP)
+
+# variance explained by each axis
+var_frac <- ap.pca$eig/sum(ap.pca$eig)
+
+# Colombia regions/subpopulations
+Colombia<-c("Urabá Gulf","Cartagena","Rosario", "San Andrés", "San Bernardo", "Tayrona", "I. Arena")
+
+#plot the PCA of all regions
+set.seed(9)
+cols2 <- c(`San Andrés`="#003049",`Urabá Gulf`="#284CB8",`San Bernardo`="#7A94E1",`Rosario`="#3370A3",`Cartagena`="#47A8BD",`I. Arena`="#69BAC7",`Tayrona`="#97CFD8",`Florida`="#959177",`Belize`= "#FCBF49", `Curacao`="#F77F00",`Puerto Rico`="#D62828" ,`USVI`="#961B33")
+p <- ggplot(ap.pca.scores, aes(x=PC1, y=PC2, color=pop))
+p <- p + geom_point(size=2)
+p <- p + stat_ellipse(level = 0.95, size = 1)
+p <- p + scale_color_manual(values=cols2)
+p <- p + theme_bw() +ylab("PC2 (6.46%)") + xlab("PC1 (9.79%)")
+
+p
+
+# just Colombia
+sub_gindAP<-popsub(gindAP,
+  sublist = c("San Andrés","Urabá Gulf","San Bernardo","Rosario","Cartagena","I. Arena","Tayrona")
+)
+
+ap.pca <- glPca(sub_gindAP, nf = 10)
+
+#plot of the % variation explained by eigenvectors
+barplot(100*ap.pca$eig/sum(ap.pca$eig), col = heat.colors(50), main="PCA Eigenvalues")
+title(ylab="Percent of variance\nexplained", line = 2)
+title(xlab="Eigenvalues", line = 1)
+
+ap.pca.scores <- as.data.frame(ap.pca$scores)
+ap.pca.scores$pop <- pop(sub_gindAP)
+
+# variance explained by each axis
+var_frac <- ap.pca$eig/sum(ap.pca$eig)
+
+set.seed(9)
+cols2 <- c(`San Andrés`="#003049",`Urabá Gulf`="#284CB8",`San Bernardo`="#69BAC7",`Rosario`="#961B33" ,`Cartagena`="#D62828",`I. Arena`="#F77F00",`Tayrona`="#FCBF49")
+p <- ggplot(ap.pca.scores[ap.pca.scores$pop %in% Colombia,], aes(x=PC1, y=PC2, color=pop))
+p <- p + geom_point(size=2)
+p <- p + stat_ellipse(level = 0.95, size = 1)
+p <- p + scale_color_manual(values=cols2)
+p <- p + theme_bw() +ylab("PC2 (2.93%)") + xlab("PC1 (3.27%)")
+
+p
+```
+San Andres falls between USVI/PR/CU and the rest of the Colombia samples, similar to the Acerv samples, but not nearly as far in variance on PC1.
+
+#DAPC
+Multivariate statistical approach that uses populations defined *a priori* to maximize the variance among populations in the sample by partitioning it into between-population and within-population components. This analysis can be used to calculate population membership probabilities.
+
+## Using the optimal K determined above
+```{r dapc}
+#use best k from above
+set.seed(9)
+ap.dapc <- dapc(gindAP, grp$grp, n.pca=40, n.da=3)
+summary(ap.dapc)
+
+cols<-c("#FCBF49","#D62828","#003049")
+
+#separate by populations
+dapc.results <- as.data.frame(ap.dapc$posterior)
+dapc.results$pop <- pop(gindAP)
+dapc.results$indNames <- rownames(dapc.results)
+
+my_df <- as.data.frame(ap.dapc$ind.coord)
+my_df$Group <- ap.dapc$grp
+my_df$pop <-poptab$region
+head(my_df)
+
+p2 <- ggplot(my_df, aes(x = LD1, y = LD2, color = factor(Group), shape=factor(pop)))
+p2 <- p2 + geom_point(size = 3, alpha=0.8)
+p2 <- p2 + theme_bw()
+p2 <- p2 + scale_color_manual(values=cols)+
+  scale_shape_manual(values=c(17,18,19,7,21,22,23,24,25,8,15,9))
+p2
+```
+```{r}
+#separate by populations
+dapc.results <- as.data.frame(ap.dapc$posterior)
+dapc.results$pop <- pop(gindAP)
+dapc.results$indNames <- rownames(dapc.results)
+
+#reorganize dataframe for ggplot
+dapc.results <- melt(dapc.results)
+colnames(dapc.results) <-c("Original_Pop","Sample","Assigned_Pop","Posterior_membership_probability")
+dapc.results$userID <- poptab$user_specimen_id
+
+# change plotting order
+dapc.results$Original_Pop = factor(dapc.results$Original_Pop, levels=c("Florida","Belize","San Andrés","Urabá Gulf","San Bernardo","Rosario","Cartagena","I. Arena","Tayrona","Curacao","Puerto Rico","USVI"))
+
+p <- ggplot(dapc.results, aes(x=userID, y=Posterior_membership_probability, fill=Assigned_Pop))
+p <- p + geom_bar(stat='identity',color="darkgrey",size=0.0001)
+p <- p + facet_grid(~ Original_Pop, scales = "free_x",space = "free_x")
+p <- p + theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 5), panel.spacing = unit(0, "lines"))+
+    scale_y_continuous(expand = c(0, 0))
+p <- p + scale_fill_manual(values=cols)
+p
+
+```
+
+## Map the assigned populations to their geographic locations
+```{r maps}
+world <- ne_countries(scale = "medium", returnclass = "sf")
+class(world)
+
+poptab$assign1<-ap.dapc$assign==1
+poptab$assign1[poptab$assign1=="TRUE"]<-1
+poptab$assign1[poptab$assign1=="FALSE"]<-0
+poptab$assign2<-ap.dapc$assign==2
+poptab$assign2[poptab$assign2=="TRUE"]<-1
+poptab$assign2[poptab$assign2=="FALSE"]<-0
+poptab$assign3<-ap.dapc$assign==3
+poptab$assign3[poptab$assign3=="TRUE"]<-1
+poptab$assign3[poptab$assign3=="FALSE"]<-0
+
+ag<-aggregate(cbind(assign1,assign2,assign3) ~ subregion, data = poptab, sum)
+
+ag2 <-ag %>%
+  right_join(poptab %>%
+      select("subregion","lat", "long","region"),by='subregion') %>%
+  group_by(region) %>%
+  distinct(subregion,.keep_all = TRUE) %>%
+  mutate(radius=sum(assign1,assign2,assign3)/25) %>%
+  mutate(pop1=sum(assign1),pop2=sum(assign2),pop3=sum(assign3), n=sum(assign1,assign2,assign3)) %>%
+  distinct(region,.keep_all = TRUE) %>%
+  select(-assign1, -assign2,-assign3)
+
+p5<-ggplot(data = world, s2=FALSE) +
+    geom_sf() +
+    coord_sf(xlim = c(-60, -90), ylim = c(7, 30), expand = FALSE)
+
+p6 <-p5 + geom_scatterpie(data = ag2,aes(x =long, y=lat, group=region, r=radius), cols=c("pop1","pop2","pop3"),alpha=0.5)+geom_scatterpie_legend(ag2$radius,x=-68, y=25, n=4)
+p6 <- p6 + scale_fill_manual(values=cols)
+p6
+```
+
+## testing different cluster sizes
+```{r dapc_multiKs}
+my_k <- 2:6
+
+grp_l <- vector(mode = "list", length = length(my_k))
+dapc_l <- vector(mode = "list", length = length(my_k))
+
+for(i in 1:length(dapc_l)){
+  set.seed(7)
+  grp_l[[i]] <- find.clusters(gindAP, n.pca = 40, n.clust = my_k[i])
+  dapc_l[[i]] <- dapc(gindAP, pop = grp_l[[i]]$grp, n.pca = 40, n.da = my_k[i])
+}
+
+my_df <- as.data.frame(dapc_l[[ length(dapc_l) ]]$ind.coord)
+my_df$Group <- dapc_l[[ length(dapc_l) ]]$grp
+my_df$pop <-poptab$region
+head(my_df)
+
+p2 <- ggplot(my_df, aes(x = LD1, y = LD2, color = factor(pop), shape=factor(Group)))
+p2 <- p2 + geom_point(size = 3, alpha=0.8)
+p2 <- p2 + theme_bw()
+p2 <- p2 + scale_color_manual(values=cols2)+
+  scale_shape_manual(values=c(17,18,19,20,21,22,23,24))
+p2
+```
+
+```{r}
+tmp <- as.data.frame(dapc_l[[1]]$posterior)
+tmp$K <- my_k[1]
+tmp$Genet <- rownames(tmp)
+tmp <- melt(tmp, id = c("Genet", "K"))
+names(tmp)[3:4] <- c("Group", "Posterior")
+tmp$Region <- poptab$region
+my_df <- tmp
+
+for(i in 2:length(dapc_l)){
+  tmp <- as.data.frame(dapc_l[[i]]$posterior)
+  tmp$K <- my_k[i]
+  tmp$Genet <- rownames(tmp)
+  tmp <- melt(tmp, id = c("Genet", "K"))
+  names(tmp)[3:4] <- c("Group", "Posterior")
+  tmp$Region <- poptab$region
+
+  my_df <- rbind(my_df, tmp)
+}
+
+grp.labs <- paste("K =", my_k)
+names(grp.labs) <- my_k
+my_df$userID <- poptab$user_specimen_id
+
+my_df$Region = factor(my_df$Region, levels=c("Florida","Belize","San Andrés","Urabá Gulf","San Bernardo","Rosario","Cartagena","I. Arena","Tayrona","Curacao","Puerto Rico","USVI"))
+
+cols3 <- c(`1`="#FCBF49",`2`="#003049",`3`="#D62828",`4`="#69BAC7",`5`="#EAE2B7",`6`="#F77F00")
+p3 <- ggplot(my_df, aes(x = userID, y = Posterior, fill = Group))
+p3 <- p3 + geom_bar(stat = "identity",color="darkgrey",size=0.0001)
+p3 <- p3 + facet_grid(K ~ Region, scales = "free_x", space = "free",
+                      labeller = labeller(K = grp.labs))
+p3 <- p3 + theme_bw()
+p3 <- p3 + ylab("Posterior probability of group membership")
+p3 <- p3 + theme(legend.position='none')
+p3 <- p3 + scale_fill_manual(values=c(cols3))
+p3 <- p3 + theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 5), panel.spacing = unit(0, "lines"))+
+    scale_y_continuous(expand = c(0, 0))
+p3
+```
+
+# Admixture cross-validation plot
+```{r}
+#Cross validation plot
+library(psych)
+ktab<- read.table("E:/PSU/NOAA/Rocio/Apalm/ADMIXTURE/CVerror_AP.txt", header=F)
+
+tab<-describeBy(ktab$V2, ktab$V1, mat=T)
+
+ggplot(tab, aes(x=as.numeric(group1), y=mean)) +
+  geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=0.1) +
+  geom_point(size=2)+ xlab("K")+ylab("Prediction Error")+theme_set(theme_bw())+
+  scale_x_continuous(breaks = seq(0, 10, by = 1))
+
+```
+
+# load in ADMIXTURE probability estimates
+```{r}
+#separate by populations
+amix<- read.table("E:/PSU/NOAA/Rocio/Apalm/ADMIXTURE/Apalm_admix_k3.txt", header=T,check.names=FALSE,stringsAsFactors = FALSE, sep="\t")
+
+#reorganize dataframe for ggplot
+admix.results <- melt(amix)
+
+admix.results$Original.pop = factor(admix.results$Original.pop, levels=c("Florida","Belize","San Andrés","Urabá Gulf","San Bernardo","Rosario","Cartagena","I. Arena","Tayrona","Curacao","Puerto Rico","USVI"))
+
+p <- ggplot(admix.results, aes(x=sample.id, y=value, fill=variable))
+p <- p + geom_bar(stat='identity',color="darkgrey",size=0.0001)
+p <- p + facet_grid(~ Original.pop, scales = "free_x",space = "free_x")
+p <- p + theme(axis.text.x = element_blank(), axis.ticks.x=element_blank(), panel.spacing = unit(0, "lines"))+
+    scale_y_continuous(expand = c(0, 0))
+p <- p + scale_fill_manual(values=c(Pop1="#FCBF49",Pop2="#D62828",Pop3="#003049"))
+p
+
+```
+
+# AMOVA
+Analysis of Molecular Variance (AMOVA) is a method for estimating population differentiation from molecular data taking into account the mutational distance between alleles. Unlike Fst, which quantifies genetic differentiation based on allele frequencies, AMOVA treats molecular data as vectors and estimates Euclidean distances between alleles. Furthermore, it is possible to test hypotheses about differentiation by grouping subpopulations in a hierarchical structure (Excoffier et al., 1992).
+```{r}
+gindAP <- vcfR2genind(APvcf)
+gindAP@pop <- as.factor(poptab$region2)
+strata(gindAP) <- data.frame(poptab[,c(4,7,8,9,10)])
+gindAP
+
+table(strata(gindAP, ~region2/subregion2))
+
+xdis<-bitwise.dist(gindAP)
+
+amova <- poppr.amova(gindAP, ~region2,  dist=xdis)
+
+amova
+
+set.seed(1999)
+signif <- randtest(amova, nrepet = 9999)
+signif
+plot(signif)
+
+amova2 <- poppr.amova(gindAP, ~assigned_pop/region2,  dist=xdis)
+
+amova2
+
+set.seed(1999)
+signif2 <- randtest(amova2, nrepet = 9999)
+signif2
+plot(signif2)
+```
+There is significant evidence of population structure by region (not surprising).
+
+# FST and other genetic diversity estimates
+```{r}
+library(hierfstat)
+library("StAMPP")
+
+#summary by region
+# separate populations into individual genind objects
+
+gindAP <- vcfR2genind(APvcf)
+gindAP@pop <- as.factor(poptab$region)
+strata(gindAP) <- data.frame(poptab[,c(4,7,8,9,10)])
+gindAP
+
+n.pop <- seppop(gindAP)
+
+bs_T<-basic.stats(n.pop$Tayrona)
+bs_T
+
+bs_I<-basic.stats(n.pop$`I. Arena`)
+bs_I
+
+bs_SB<-basic.stats(n.pop$`San Bernardo`)
+bs_SB
+
+bs_SA<-basic.stats(n.pop$`San Andrés`)
+bs_SA
+
+bs_R<-basic.stats(n.pop$Rosario)
+bs_R
+
+bs_Car<-basic.stats(n.pop$Cartagena)
+bs_Car
+
+bs_Cap<-basic.stats(n.pop$`Urabá Gulf`)
+bs_Cap
+
+he_ho<-cbind(T_He=bs_T$perloc$Hs,T_HO=bs_T$perloc$Ho, I_He=bs_I$perloc$Hs,I_HO=bs_I$perloc$Ho,
+             SB_He=bs_SB$perloc$Hs, SB_HO=bs_SB$perloc$Ho,
+            R_He=bs_R$perloc$Hs,  R_HO=bs_R$perloc$Ho, SA_He=bs_SA$perloc$Hs,SA_HO=bs_SA$perloc$Ho,
+             Car_He=bs_Car$perloc$Hs,Car_HO=bs_Car$perloc$Ho,  Cap_He=bs_Cap$perloc$Hs, Cap_HO=bs_Cap$perloc$Ho)
+
+boxplot(he_ho)
+
+t.test(bs_I$perloc$Hs,bs_I$perloc$Ho, pair = T, var.equal = TRUE, alter = "greater")
+
+# Estimates of heterozygosity for the whole species
+sub_gindAP<-popsub(gindAP,
+  sublist = c("Urabá Gulf","Cartagena","Rosario","San Andrés","San Bernardo","Tayrona","I. Arena"),
+)
+
+toto_AP <- summary(sub_gindAP)
+
+boxplot(toto_AP$Hexp, toto_AP$Hobs)
+
+# significance test
+bartlett.test(list(toto_AP$Hexp, toto_AP$Hobs))
+t.test(toto_AP$Hexp, toto_AP$Hobs, pair = T, var.equal = TRUE, alter = "greater")
+
+# reload in genlight object
+gindAP <- vcfR2genlight(APvcf)
+gindAP@pop <- as.factor(poptab$region)
+strata(gindAP) <- data.frame(poptab[,c(4,7)])
+gindAP
+
+sf<-stamppFst(gindAP, nboots = 100, percent = 95, nclusters = parallel::detectCores() - 3)
+
+#write.table(sf$Fsts,"AP_FST_CI_values.txt", sep="\t")
+```
+
+# Nucleotide diversity estimate
+```{r}
+source("C:/Users/Sheila's Comp/Downloads/SambaR-master/SambaR-master/SAMBAR_v1.05.txt")
+
+getpackages(myrepos='http://cran.us.r-project.org',mylib=NULL)
+
+samAP<-genlight2sambar(genlight_object="gindAP",do_confirm=TRUE)
+
+calcdiversity(nrsites=NULL,legend_cex=2.5)
+
+calcpi(pi_per_pop=TRUE,myinput="gindAP",popnames=mysambar$populations,corrected=TRUE)
+
+# part of the seqdivplot() in SambaR
+pi_df			<- mysambar$tajdlist_meta[[1]]
+	pi_df$nsegsites	<- NA
+	nsnps				<- nrow(snps)
+	npops				<- length(mysambar$populations)
+	mycols				<- mysambar$mycolours[1:npops]
+	combipoptable		<- combn(mysambar$populations,m=2)
+	combicoltable		<- combn(mycols,m=2)
+	combicolvector		<- vector()
+	combipopvector		<- vector()
+	npairwise			<- ncol(combicoltable)
+	ntotal				<- npops+npairwise
+	for(i in c(1:npairwise))
+		{
+		mycol1				<- combicoltable[1,i]
+		mycol2				<- combicoltable[2,i]
+		mycolfunc3 			<- colorRampPalette(c(mycol1,mycol2))
+		combicolvector[i]	<- mycolfunc3(3)[2]
+		combipopvector[i]	<- ifelse(combipoptable[1,i]<combipoptable[2,i],paste(combipoptable[1,i],combipoptable[2,i],sep="_"),paste(combipoptable[2,i],combipoptable[1,i],sep="_"))
+		}
+	for(i in c(1:nrow(pi_df)))
+		{
+		mypop1				<- pi_df$pop1[i]
+		mypop2				<- pi_df$pop2[i]
+		mymaf1				<- snps[,paste("maf",mypop1,sep="_")]
+		mymaf2				<- snps[,paste("maf",mypop2,sep="_")]
+		pi_df$comparison[i]<-ifelse(pi_df$pop1[i]==pi_df$pop2[i],pi_df$pop1[i],ifelse(pi_df$pop1[i]<pi_df$pop2[i],paste(pi_df$pop1[i],pi_df$pop2[i],sep="\n"),paste(pi_df$pop2[i],pi_df$pop1[i],sep="\n")))
+		pi_df$comparison2[i]<-ifelse(mypop1==mypop2,"within","between")
+		pi_df$nsegsites[i]	<- length(mymaf1[mymaf1>0|mymaf2>0])
+	}
+
+# subset to only Colombia samples
+pi_df<-pi_df[pi_df$comparison %in% Colombia,]
+
+mymin<- min(pi_df$ndiffpersite,na.rm=TRUE)
+mymax<- max(pi_df$ndiffpersite,na.rm=TRUE)
+
+pi_df$comparison <- factor(pi_df$comparison, levels=c("San Andrés","Urabá Gulf","San Bernardo","Rosario","Cartagena","I. Arena","Tayrona"))
+
+boxplot(pi_df$ndiffpersite[pi_df$comparison2=="within"]~pi_df$comparison[pi_df$comparison2=="within"],las=3,ylim=c(mymin,mymax),col=cols3,ylab="",xlab="")
+
+# test for significance between regions
+mod<-aov(pi_df$ndiffpersite[pi_df$comparison2=="within"]~pi_df$comparison[pi_df$comparison2=="within"])
+
+summary(mod)
+
+TukeyHSD(mod)
+
+pi_df %>%
+   dplyr::group_by(comparison) %>%
+   dplyr::summarize(mean=mean(ndiffpersite), se=sd(ndiffpersite))
+```
+
+
+# Mantel's test
+```{r}
+library(vegan)
+library(ggpmisc)
+AP.mat2 <- read.table("E:/PSU/NOAA/Rocio/Apalm/geoDist3.txt", header=T,sep="\t",
+                               check.names=FALSE,stringsAsFactors = FALSE)
+
+AP.xy <- dist(cbind(AP.mat2$long, AP.mat2$lat))
+
+#Calculate the distance between two locations/nests.
+library(geosphere)
+#default unit of measurement is kilometers
+AP.xy  <- distm(as.matrix(AP.mat2[,c("long","lat")]), fun = distHaversine)/1000
+
+# genetic distance of all sites
+genDist<-as.dist(sf$Fsts)
+
+# just Colombia sites
+genDist2<-as.dist(sf$Fsts[6:12,6:12])
+AP.xy2<-as.dist(AP.xy[6:12,6:12])
+
+AP.correlog <- mantel.correlog(genDist2, XY=as.dist(AP.xy2), nperm=9999)
+summary(AP.correlog)
+AP.correlog
+plot(AP.correlog)
+
+man<-mantel.rtest(genDist2, as.dist(AP.xy2), nrepet = 9999)
+man
+plot(man)
+
+aa = as.vector(genDist2)
+tt = as.vector(AP.xy2)
+mat = data.frame(aa,tt)
+
+my.formula <- y ~ x
+mm = ggplot(mat, aes(y = aa, x = tt)) +
+    geom_point(size = 3, alpha = 0.5) +
+    geom_smooth(method = "lm", colour = "black", alpha = 0.2) +
+    labs(x = "Geographic Distance (km)", y = "Genetic Distance (FST)") +
+    theme( axis.text.x = element_text(face = "bold",colour = "black", size = 12),
+        axis.text.y = element_text(face = "bold", size = 11, colour = "black"),
+        axis.title= element_text(face = "bold", size = 14, colour = "black"),
+        panel.background = element_blank(),
+        panel.border = element_rect(fill = NA, colour = "black"))
+mm
+```
+
+# Identify SNPs that underlie the split of the two clusters
+## PCAdapt[https://bcm-uga.github.io/pcadapt/articles/pcadapt.html]
+This package identifies 32 outlier SNPS from PC1 that separate San Andres and the one individual from Taynora (population #2) from the other samples based on differences in allele frequencies. The program pcadapt package performs genome scans for selection based on individual genotype data.
+```{r pcadapt}
+path <- "E:/PSU/NOAA/Rocio/Apalm_uniqueMLG.recode.vcf"
+fileAP <- read.pcadapt(path, type = "vcf")
+
+poptab<-read.table("E:/PSU/NOAA/Rocio/Apalm/apalm_pop.txt",
+                   check.names=FALSE, header=F, na.strings = c("", "NA"),
+                   stringsAsFactors = FALSE, sep="\t")
+colnames(poptab)<-c("row_id","affy_id","user_specimen_id","region", "lat", "long","subregion","assigned_pop")
+
+# run pcadapt, test up to 20 clusters/pops
+app <- pcadapt(input = fileAP, K = 20)
+
+# Screeplot displays in decreasing order the percentage of variance explained by each PC
+plot(app, option = "screeplot",  K = 20)
+```
+It was found that K=2 corresponds to the optimal choice of the number of PCs. Use a Q-Q plot and histogram of the pvalues to check the distribution.
+
+```{r pcadapt_2}
+#displays the PCA results colored by collection regions
+plot(app, option = "scores", pop = poptab$region, gg.col=transp(cols,0.6))
+
+#change to different PC axes
+plot(app, option = "scores", i = 1, j = 3, pop = poptab$region, gg.col=transp(cols,0.6))
+plot(app, option = "scores", i = 1, j = 4, pop = poptab$region, gg.col=transp(cols,0.6))
+
+plot(app, option = "scores", i = 2, j = 3, pop = poptab$region, gg.col=transp(cols,0.6))
+plot(app, option = "scores", i = 2, j = 4, pop = poptab$region, gg.col=transp(cols,0.6))
+
+plot(app, option = "qqplot", threshold = 0.1)
+plot(app, option = "stat.distribution")
+```
+
+Looking at population structure beyond K = 2 confirms the results of the scree plot. The third and the fourth principal components do not ascertain population structure anymore.
+
+
+Re-run with the best PC based on the screen plot above but doing genome scan for each principal component to get component-wise p-values. The test statistics are the loadings, which correspond to the correlations between each PC and each SNP. P-values are computed by making a Gaussian approximation for each PC and by estimating the standard deviation of the null distribution.
+
+```{r pcadapt_3}
+y <- pcadapt(fileAP, K = 2,method = "componentwise", LD.clumping = list(size = 200, thr = 0.2),min.maf = 0.05) #K is the best number of PC from above
+summary(y$pvalues)
+```
+A Manhattan plot displays −log10 of the p-values.
+```{r pcadapt_4}
+plot(y , option = "manhattan", K=2)
+```
+
+Check the expected uniform distribution of the p-values.  
+```{r pcadapt_5}
+hist(y$pvalues, xlab = "p-values", main = NULL, breaks = 50, col = "orange")
+
+```
+
+The p-values were transformed into qvalues to control for false discovery rate, or the percentage of false discoveries among the list of candidate SNPs. I used a false discovery rate lower than 1% (alpha = 0.01).
+```{r pcadapt_6}
+qval1 <- qvalue(y$pvalues[,1])$qvalues
+alpha <- 0.01
+outliers1 <- which(qval1 < alpha)
+length(outliers1)
+
+snp_pc1 <- get.pc(y, outliers1)
+
+# PC1
+length(which(snp_pc1$PC =="1"))
+#PC2
+length(which(snp_pc1$PC =="2"))
+```
+
+## OutFLANK[https://rpubs.com/lotterhos/outflank]
+Fst measures the degree of allele frequency differences between 2 or more groups of individuals. In most cases, these groups represent different spatially distinct populations. However, population demographic history (drift, bottlenecks, range expansions) can have a profound effect on the distribution of Fst, and often leads to increases in the number of high Fst loci, leading to false positives in scans for selective sweeps. Therefore, we need to be careful to separate out loci with high Fst due to neutral demographic history from those with high Fst due to natural selection.
+
+OutFLANK is an R package that implements the method developed by Whitlock and Lotterhos to use likelihood on a trimmed distribution of FST values to infer the distribution of FST for neutral markers. This distribution is then used to assign q-values to each locus to detect outliers that may be due to spatially heterogeneous selection.
+
+Conversion of the vcf into the correct format for this package:
+```{r outflank}
+#convert vcf to OUTFLANK format
+APvcf <- read.vcfR("E:/PSU/NOAA/Rocio/Apalm_uniqueMLG.recode.vcf")
+geno <- extract.gt(APvcf)
+G <- matrix(NA, nrow = nrow(geno), ncol = ncol(geno))
+
+G[geno %in% c("0/0", "0|0")] <- 0
+G[geno %in% c("0/1", "1/0", "1|0", "0|1")] <- 1
+G[geno %in% c("1/1", "1|1")] <- 2
+
+sum(is.na(G)) # should not contain NAs
+o2 <- G
+o2[is.na(o2)] <- 9
+sum(is.na(o2))
+dim(o2)
+levels(factor(as.numeric(unlist(o2))))
+
+table(as.vector(o2))
+SNPdata <- t(o2)
+head(SNPdata[,1:20])
+
+#pull out chrom and position from VCF file
+t <- getCHROM(APvcf)
+u <- getPOS(APvcf)
+r<- paste(t,u,sep="_") #loci names
+```
+
+A FST is calculated for each SNP based on the original collection site (regions):
+```{r outflank_2}
+FstDataFrame <- MakeDiploidFSTMat(SNPdata, r, poptab$region)
+
+head(FstDataFrame)
+
+plot(FstDataFrame$FST, FstDataFrame$FSTNoCorr, xlim = c(-0.01,0.3),
+     ylim = c(-0.01, 0.3), pch = 20)
+abline(0, 1) # Checking the effect of sample size on Fst since FSTCoCorr will be used in the follow
+
+plot(FstDataFrame$He, FstDataFrame$FSTNoCorr, pch=20, col="grey")
+
+hist(FstDataFrame$FSTNoCorr, breaks=seq(0,1, by=0.001))
+hist(FstDataFrame$FSTNoCorr[FstDataFrame$He>0.05], breaks=seq(0,1, by=0.001))
+hist(FstDataFrame$FSTNoCorr[FstDataFrame$He>0.1], breaks=seq(0,1, by=0.001))
+```
+
+Next, trim back loci in the upper and lower 5% of the empirical Fst distribution, and eliminate low frequency SNPs (ones with expected heterozygosity, Hmin, < 0.1; equates to a MAF of ~0.05).
+
+```{r outflank_3}
+OF <- OutFLANK(FstDataFrame, NumberOfSamples=2, qthreshold = 0.05,
+               RightTrimFraction = 0.05,LeftTrimFraction = 0.25)
+
+# Plot the ditribution of Fst with the chi squared distribution, the empirical distribution of Fst (yellow bars) and the predicted neutral distribution (black line)
+OutFLANKResultsPlotter(OF, withOutliers = TRUE, NoCorr = TRUE, Hmin = 0.1,
+                       binwidth = 0.005, Zoom = FALSE, RightZoomFraction = 0.05,
+                       titletext = NULL)
+
+OutFLANKResultsPlotter(OF , withOutliers = TRUE,
+                       NoCorr = TRUE, Hmin = 0.1, binwidth = 0.005, Zoom =
+                         TRUE, RightZoomFraction = 0.15, titletext = NULL)
+
+hist(OF$results$pvaluesRightTail)
+
+sum(OF$results$qvalues<0.05, na.rm=TRUE)
+```
+
+Now detect outlier high FST markers.
+```{r outflank_4}
+P1 <- pOutlierFinderChiSqNoCorr(FstDataFrame, Fstbar = OF$FSTNoCorrbar,
+dfInferred = OF$dfInferred, qthreshold = 0.05, Hmin=0.1)
+head(P1)
+tail(P1)
+
+my_out <- P1$OutlierFlag=="TRUE"
+plot(P1$He, P1$FST, pch=19, col=rgb(0,0,0,0.1), ylim=c(-0.02,1))
+points(P1$He[my_out], P1$FST[my_out], col="blue")
+```
+This results in 17 outlier SNPs.
+
+## BayeScan
+Yet another tool to find high-scoring FST outliers from the SNP data. BayeScan aims at identifying candidate loci under natural selection from genetic data, using differences in allele frequencies between populations.The difference in allele frequency between this common gene pool and each subpopulation is measured by a subpopulation specific FST coefficient.BayeScan incorporates the uncertainty on allele frequencies due to small sample sizes because it is Bayesian method.
+
+Export the genotype matrix for use in Bayescan outside the R environment.
+```{r Bayescan}
+#convert format of SNPdata for bayescan
+rownames(SNPdata)<-t(colnames(geno))
+#write.table(SNPdata, "apalm_geno_snps.txt", sep=" ")
+```
+
+Import the result of Bayescan to plot the results and find the outliers.
+```{r Bayescan_2}
+source("C:/Users/Sheila's Comp/Documents/BayeScan2.1/BayeScan2.1/R functions/plot_R.r")
+
+fst <- plot_bayescan("E:/PSU/NOAA/Rocio/Bayescan/ap_aug19_fst.txt", FDR=0.05, add_text=F)
+summary(fst)
+#fst$outliers
+fst$nb_outliers
+
+b <- read.table("E:/PSU/NOAA/Rocio/Bayescan/ap_aug19_fst.txt")
+b$ID <- seq.int(nrow(b))
+colnames(b) <- c("BAYES_prob", "BAYES_log10.PO.", "BAYES_qval", "BAYES_alpha", "BAYES_fst", "ID")
+
+fout <- as.data.frame(fst$outliers)
+colnames(fout) <- c("ID")
+
+sel <- read.table("Bayescan/ap_aug19.sel", colClasses = "numeric")
+parameter="Fst6"
+plot(density(sel[[parameter]]), xlab=parameter, main=paste(parameter, "posterior distribution"))
+boa.hpd(sel[[parameter]], 0.05)
+```
+This found 0 outlier SNPs.
+
+## Combining the three outlier detection methods
+```{r combine reports}
+# make a data frame of q/pvalues
+qvalz <- as.data.frame(qval1)
+pvalz <- as.data.frame(y$pvalues)
+out2<-cbind(as.integer(rownames(pvalz)),r, pvalz,qvalz)
+colnames(out2)<-c("ID", "LocusName","pca_pvalue_p1","pca_pvalue_p2", "pca_qvalue")
+head(out2)
+
+outliers<- out2  %>%
+  mutate(PCA_outlier = ifelse(pca_qvalue < 0.01, "TRUE", "FALSE")) %>%
+  mutate(PCA_pc1 = ifelse(out2$ID %in% snp_pc1$SNP, snp_pc1$PC, "FALSE")) %>%
+  left_join(P1 %>%
+        select("LocusName", "He", "FST", "meanAlleleFreq","qvalues","pvalues","pvaluesRightTail","OutlierFlag"),by="LocusName") %>%
+ left_join(b %>% select("BAYES_qval","BAYES_fst", "ID"), by=c("ID")) %>%
+  mutate(BAYES_outlier = ifelse(ID %in% fout$ID, "TRUE", "FALSE")) %>%
+separate(LocusName, into = c("chrom", "pos"), sep="_(?=[^_]+$)")
+
+#write.table(outliers, file="outliers_PC1_Ap_update.txt", sep="\t")
+```
+
+Create a venn diagram of what outliers SNPs are shared from each method.
+```{r venndiagram}
+library(VennDiagram)
+#1
+nrow(subset(outliers, PCA_pc1== "1"))
+#2
+nrow(subset(outliers, OutlierFlag== "TRUE"))
+#1 and 2
+nrow(subset(outliers,  PCA_pc1== "1" &  OutlierFlag== "TRUE"))
+
+
+pdf(file="Ap_venn.pdf",width=5, height=5)
+grid.newpage()
+draw.pairwise.venn(area1 = 32, area2 = 17, cross.area = 11, category = c("PCAdapt", "OutFLANK"), lty = "blank",
+                 fill = c("#0C5BB0FF", "#EE0011FF"), fontfamily =rep("sans", 3), cat.fontfamily = rep("sans", 2))
+dev.off()
+```
